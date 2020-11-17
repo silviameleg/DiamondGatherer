@@ -1,0 +1,11 @@
+h1 {
+    text-align: center;
+}
+
+p span {
+    color: rgba(202, 9, 9, 0.877);
+}
+
+canvas {
+    border: solid 1px #000;
+}
