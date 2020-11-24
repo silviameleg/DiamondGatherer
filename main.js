@@ -43,7 +43,7 @@ button.addEventListener("click", function() {
 // miscarea personajelor de la tastatura
 
 document.addEventListener("keydown", function(event) {
-    context.clearRect(0, 0, 600, 400);
+    context.clearRect(0, 0, CANVAS_WIDTH , CANVAS_HEIGHT);;
     switch (event.key) {
         case 'ArrowUp':
             {
