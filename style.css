@@ -1,11 +1,15 @@
-h1 {
-    text-align: center;
-}
-
-p span {
-    color: rgba(202, 9, 9, 0.877);
-}
-
-canvas {
-    border: solid 1px #000;
-}
+ p {
+     background-color: red;
+ }
+ 
+ div {
+     border: 1px solid black;
+ }
+ 
+ canvas {
+     border: 2px solid blue;
+ }
+ 
+ #newCanvas {
+     border: 2px solid darkblue;
+ }
