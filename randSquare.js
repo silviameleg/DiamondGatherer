@@ -11,6 +11,11 @@ const SQUARE_SIDE = 50;
 const myButton = document.getElementById("randButton");
 
 
+function drawSquare(x, y) {
+    context.fillStyle = "purple";
+    context.fillRect(x, y, 50, 50);
+};
+
 function generateSquare() {
 
     // generate a random location every time the button is clicked
@@ -22,13 +27,9 @@ function generateSquare() {
     context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     // draw the first/next square at a new random location
-    drawSquare();
+    drawSquare(x, y);
 };
 
-// !!de rezolvat problema cu x si y declarate in generateSquare
-function drawSquare() {
-    context.fillStyle = "purple";
-    context.fillRect(x, y, 50, 50);
-};
+
 
 myButton.addEventListener("click", generateSquare);
