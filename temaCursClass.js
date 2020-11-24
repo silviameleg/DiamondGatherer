@@ -28,22 +28,22 @@ class Motorcycle {
 
 
 
-let Hornet = new Motorcycle('Honda', 'Hornet', 2016, '600 cc ', 115, 255);
-console.log('My bike is ' + Hornet.age() + ' years old.');
-console.log(Hornet.presentation());
-console.log(Hornet.timeToDestination(300));
-console.log(Hornet.personalRecord(21, 0.1));
+let hornet = new Motorcycle('Honda', 'Hornet', 2016, '600 cc ', 115, 255);
+console.log('My bike is ' + hornet.age() + ' years old.');
+console.log(hornet.presentation());
+console.log(hornet.timeToDestination(300));
+console.log(hornet.personalRecord(21, 0.1));
 
 
-let Suzuki = new Motorcycle('Suzuki', 'GSX-R', 2020, '1000cc ', 134, 279);
-console.log('My bike is ' + Suzuki.age() + ' years old.');
-console.log(Suzuki.presentation());
-console.log(Suzuki.timeToDestination(115));
-console.log(Suzuki.personalRecord(10, 0.04));
+let suzuki = new Motorcycle('Suzuki', 'GSX-R', 2020, '1000cc ', 134, 279);
+console.log('My bike is ' + suzuki.age() + ' years old.');
+console.log(suzuki.presentation());
+console.log(suzuki.timeToDestination(115));
+console.log(suzuki.personalRecord(10, 0.04));
 
 
-let Ducati = new Motorcycle('Ducati', 'Multistrada V4', 2019, '900cc ', 85, 248);
-console.log('My bike is ' + Ducati.age() + ' years old.');
-console.log(Ducati.presentation());
-console.log(Ducati.timeToDestination(590));
-console.log(Ducati.personalRecord(12, 0.06));
+let ducati = new Motorcycle('Ducati', 'Multistrada V4', 2019, '900cc ', 85, 248);
+console.log('My bike is ' + ducati.age() + ' years old.');
+console.log(ducati.presentation());
+console.log(ducati.timeToDestination(590));
+console.log(ducati.personalRecord(12, 0.06));

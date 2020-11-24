@@ -10,22 +10,25 @@ const SQUARE_SIDE = 50;
 
 const myButton = document.getElementById("randButton");
 
+
 function generateSquare() {
 
     // generate a random location every time the button is clicked
     let x = Math.floor(Math.random() * (CANVAS_WIDTH - SQUARE_SIDE));
     let y = Math.floor(Math.random() * (CANVAS_HEIGHT - SQUARE_SIDE));
 
-    function drawSquare() {
-        context.fillStyle = "purple";
-        context.fillRect(x, y, 50, 50);
-    };
 
     // clear the previous random square
-    context.clearRect(0, 0, 600, 400);
+    context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-    // draw the first/next square at a new random locagtion
+    // draw the first/next square at a new random location
     drawSquare();
-}
+};
+
+// !!de rezolvat problema cu x si y declarate in generateSquare
+function drawSquare() {
+    context.fillStyle = "purple";
+    context.fillRect(x, y, 50, 50);
+};
 
 myButton.addEventListener("click", generateSquare);
