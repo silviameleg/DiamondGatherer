@@ -1,7 +1,64 @@
+// import { Animal } from '/js/animal.js';
+
 const canvas = document.getElementById("game-canvas");
 /** @type {CanvasRenderingContext2D} */
 const context = canvas.getContext('2d');
-const btmButton = document.getElementById('back-to-menu-button');
+
+// const myPet = new Animal('Rocky');
+// myPet.canEat();
+
+// // context.fillStyle = "red";
+// // context.fillRect(280, 20, 40, 20);
+
+// const geoerge = new Image();
+// geoerge.src = 'assets/george.png'
+// const GEORGE_WIDTH = 40;
+// const GEORGE_HEIGHT = 45;
+// let georgeX = 100;
+// let georgeY = 100;
+// geoerge.onload = () => {
+//     context.drawImage(geoerge, 0 * GEORGE_WIDTH, 0 * GEORGE_HEIGHT, GEORGE_WIDTH, GEORGE_HEIGHT, 100, 100, GEORGE_WIDTH, GEORGE_HEIGHT)
+// }
+
+// const mario = new Image();
+// mario.src = 'assets/mario.png'
+// const MARIO_WIDTH = 32;
+// const MARIO_HEIGHT = 39;
+// mario.onload = () => {
+//     context.drawImage(mario, 0 * MARIO_WIDTH, 0 * MARIO_HEIGHT, MARIO_WIDTH, MARIO_HEIGHT, 0, 0, MARIO_WIDTH, MARIO_HEIGHT)
+// }
+
+// const button = document.getElementById("myButton");
+// button.addEventListener("click", function() {
+//     console.log(this);
+//     context.fillStyle = "green";
+//     context.fillRect(480, 20, 40, 20);
+// });
+
+// document.addEventListener("keydown", function(event) {
+//     context.clearRect(0, 0, 600, 400);
+//     switch(event.key) {
+//         case 'ArrowUp': {
+//             georgeY -= 10;
+//             break;
+//         }
+//         case 'ArrowDown': {
+//             georgeY += 10;
+//             break;
+//         }
+//         case 'ArrowLeft': {
+//             georgeX -= 10;
+//             break;
+//         }
+//         case 'ArrowRight': {
+//             georgeX += 10;
+//             break;
+//         }
+//     }
+
+//     context.drawImage(mario, 0 * MARIO_WIDTH, 0 * MARIO_HEIGHT, MARIO_WIDTH, MARIO_HEIGHT, 0, 0, MARIO_WIDTH, MARIO_HEIGHT);
+//     context.drawImage(geoerge, 0 * GEORGE_WIDTH, 0 * GEORGE_HEIGHT, GEORGE_WIDTH, GEORGE_HEIGHT, georgeX, georgeY, GEORGE_WIDTH, GEORGE_HEIGHT)
+// });
 
 const socket = io();
 
@@ -40,9 +97,10 @@ document.getElementById('leave-chat-button').addEventListener('click', function(
 })
 
 socket.on('menu', function() {
-    console.log('You left chat!');
+    // console.log('You left chat!');
     document.getElementById('menu').classList.remove('display-none');
     document.getElementById('chat-container').classList.add('display-none');
+    document.getElementById('game-container').classList.add('display-none');
 })
 
 document.getElementById('create-game-button').addEventListener('click', function() {
@@ -56,17 +114,29 @@ document.getElementById('create-game-button').addEventListener('click', function
     }
 })
 
-socket.on('game-loop', function(objectsForDraw) {
+socket.on('game-loop', function(data) {
     document.getElementById('menu').classList.add('display-none');
+    document.getElementById('back-to-menu').classList.add('display-none');
     document.getElementById('game-container').classList.remove('display-none');
     context.drawImage(document.getElementById('map-image'), 0, 0);
 
-    objectsForDraw.forEach(function(objectForDraw) {
+    data.objectsForDraw.forEach(function(objectForDraw) {
         context.drawImage(
             document.getElementById(objectForDraw.imageId),
             ...objectForDraw.drawImageParameters
         )
     })
+
+    if (data.gameInProgress) {
+        document.getElementById('waiting-for-players').classList.add('display-none');
+        document.getElementById('score-container').classList.remove('display-none');
+        document.getElementById('space-ranger-score').innerHTML = data.score['space-ranger'];
+        document.getElementById('pink-lady-score').innerHTML = data.score['pink-lady'];
+        document.getElementById('diamonds-count').innerHTML = data.diamondsCount;
+    } else {
+        document.getElementById('waiting-for-players').classList.remove('display-none');
+        document.getElementById('score-container').classList.add('display-none');
+    }
 })
 
 document.addEventListener("keydown", function(event) {
@@ -87,6 +157,11 @@ document.addEventListener("keydown", function(event) {
         case 'ArrowRight':
             {
                 socket.emit('start-moving-player', 'right');
+                break;
+            }
+        case ' ':
+            {
+                socket.emit('attack');
                 break;
             }
     }
@@ -129,15 +204,13 @@ socket.on('remove-game-from-list', function(gameId) {
     document.getElementById(gameId).classList.add('display-none');
 })
 
-//tema curs 4 exercitiul 2
-
-socket.on('game-over', function(reason) {
-    console.log('Game Over', reason);
-    context.font = "40px Arial";
-    context.fillText("GAME OVER", 350, 280);
-    btmButton.classList.remove('display-none');
+socket.on('game-over', function(imageId, gameId) {
+    context.drawImage(document.getElementById(imageId), 0, 0);
+    document.getElementById('back-to-menu').classList.remove('display-none');
+    document.getElementById('back-to-menu').dataset.gameId = gameId;
+    document.getElementById('score-container').classList.add('display-none');
 })
 
-btmButton.addEventListener('click', function() {
-    socket.emit('back-to-menu');
+document.getElementById('back-to-menu').addEventListener('click', function() {
+    socket.emit('back-to-menu', document.getElementById('back-to-menu').dataset.gameId);
 })
